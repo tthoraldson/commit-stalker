@@ -1,0 +1,25 @@
+{
+  "name": "commit-stalker",
+  "version": "1.0.0",
+  "description": "track github commits for a group",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tthoraldson/commit-stalker.git"
+  },
+  "author": "theresa.thoraldson@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tthoraldson/commit-stalker/issues"
+  },
+  "homepage": "https://github.com/tthoraldson/commit-stalker#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "mongoose": "^4.6.0"
+  }
+}
