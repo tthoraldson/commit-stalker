@@ -1,5 +1,5 @@
 .git
 .DS_Store
 node_modules
-server/vendor
+server/public/vendor
 npm-debug.log
