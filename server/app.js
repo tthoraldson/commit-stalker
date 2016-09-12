@@ -7,10 +7,13 @@ var mongoose = require('mongoose');
 
 /** ---------- OUR MODULES ---------- **/
 var index = require('./routes/index');
+var botHello = require('./routes/bot/hello'):
+
 
 /** ---------- MIDDLEWARE ---------- **/
 app.use(express.static(path.join(__dirname, './public')));
 app.use(bodyParser.json()); // needed for angular requests
+app.use(bodyParser.urlencoded({ extended: true }));
 
 /** ---------- EXPRESS ROUTES ---------- **/
 app.use('/', index);
