@@ -7,7 +7,7 @@ var mongoose = require('mongoose');
 
 /** ---------- OUR MODULES ---------- **/
 var index = require('./routes/index');
-var botHello = require('./routes/bot/hello'):
+var botHello = require('./routes/bot/hello');
 
 
 /** ---------- MIDDLEWARE ---------- **/
@@ -17,6 +17,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 /** ---------- EXPRESS ROUTES ---------- **/
 app.use('/', index);
+app.use('/hello', botHello);
 
 /** ---------- MONGOOSE CONNECTION HANDLING ---------- **/
 var databaseUri = 'mongodb://localhost:27017/omicron';
