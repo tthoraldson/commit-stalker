@@ -1,16 +1,19 @@
 var express = require('express');
-var router = express.Router();
+var mongoose = require('mongoose');
+var util = require('util');
+var path = require('path');
+var Bot = require('slackbots');
 
-router.post('/hello', function(req, res, next){
-  var userName = req.body.user_name;
-  var botPayload = {
-    text: 'Hello, ' + userName + '!'
-  }
-  if (userName !== 'commit_stalker'){
-    return res.status(200).json(botPayload);
-  } else {
-    res.status(200).end();
-  }
-});
+var commit_stalkerBot = function Constructor(settings) {
+    this.settings = settings;
+    this.settings.name = this.settings.name || 'commit_stalker';
+    this.dbPath = settings.dbPath || path.resolve(process.cwd(), 'data', 'commit_stalker.db');
 
-module.exports = router;
+    this.user = null;
+    this.db = null;
+};
+
+// inherits methods and properties from the Bot constructor
+util.inherits(commit_stalkerBot, Bot);
+
+module.exports = commit_stalkerBot;
