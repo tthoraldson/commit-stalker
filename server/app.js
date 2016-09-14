@@ -17,7 +17,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 /** ---------- EXPRESS ROUTES ---------- **/
 app.use('/', index);
-app.use('/hello', botHello);
+// app.use('/hello', botHello);
 
 /** ---------- MONGOOSE CONNECTION HANDLING ---------- **/
 var databaseUri = 'mongodb://localhost:27017/omicron';
