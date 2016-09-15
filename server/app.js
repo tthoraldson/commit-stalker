@@ -34,5 +34,5 @@ mongoose.connection.on('error', function (err) {
 /** ---------- START SERVER ---------- **/
 app.set('port', process.env.PORT || 5000);
 app.listen(app.get('port'), function () {
-  console.log('Slack-bot listening on port', app.get('port'));
+  console.log('Slack-bot introduction on: ', app.get('port'));
 });
