@@ -44,5 +44,5 @@ exports.get = function(){
     }
   }
   request(options, callback);
-
+  return status;
 }
