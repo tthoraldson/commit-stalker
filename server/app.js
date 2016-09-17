@@ -78,6 +78,7 @@ bot.on('start', function() {
 
       // if text is directed @commit_stalker
       if(data.text.includes('<@U2B4DPJ68>')){
+        console.log('--------------------------------------\nslack mention: ' + data.text);
 
         var tempMessage = data.text.toLowerCase();
         // find user from usernames array
@@ -135,7 +136,7 @@ function getTeamUsers(users){
   });
 
   var usernamesLength = usernames.length;
-  console.log('getTeamUsers() completed - ' + usernamesLength + ' users found.');
+  console.log(usernamesLength + ' users found');
 }
 
 
@@ -149,7 +150,7 @@ function findUsernameById(id){
     }
     return tempUsername
   });
-  console.log('Username found: ' + tempUsername);
+  console.log('Current Conversation With: ' + tempUsername);
   return tempUsername
 }
 

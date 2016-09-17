@@ -1,10 +1,10 @@
 var request = require('request');
+var Promise = require('promise');
+var status;
+var github = 'tthoraldson'
 
-exports.get = function(){
-  var status;
-  var eventLog;
-  var github = 'tthoraldson'
 
+exports.get = function(callback){
 
   var options = {
     url: 'https://api.github.com/users/' + github + '/events',
@@ -43,6 +43,8 @@ exports.get = function(){
       status = null;
     }
   }
-  request(options, callback);
-  return status;
+  request(options, callback)
+    .on('response', function(data){
+      console.log('async status: ' + status);
+  });
 }
