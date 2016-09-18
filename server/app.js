@@ -45,6 +45,7 @@ app.listen(app.get('port'), function () {
 // global vars
 var usernames = [];
 var channels = [];
+var tempStatus;
 
 // token for slack bot - session var
 var token = (process.env.SLACK_API_TOKEN || '');
@@ -62,7 +63,6 @@ var params = {
 
 // declare @commit_stalker using the settings var
 var bot = new Bot(settings);
-
 
 
 bot.on('start', function() {
@@ -95,21 +95,26 @@ bot.on('start', function() {
         }
 
         if (tempMessage.includes('check commits') || tempMessage.includes('have I commited?')){
-          var cats = commits.get();
-          console.log(cats);
-          // if (status) {
-          //   bot.postMessageToUser(tempUsername, 'My little birds tell me you did make a commit', params, function(data){ console.log('@commit_stalker said: ' + data.message.text); });
-          // }
-          // if (status == false){
-          //   bot.postMessageToUser(tempUsername, 'I do not find a commit in my records... but I\'ll keep watching :scream:', params, function(data){ console.log('@commit_stalker said: ' + data.message.text); });
-          // }
-          // if (status == null){
-          //   bot.postMessageToUser(tempUsername, 'There was an error getting your record. If this error continues, please message @theresa.', params, function(data){ console.log('@commit_stalker said: ' + data.message.text); });
-          // }
+          commits.get().then(function (status) {
+            tempStatus = status;
+            console.log('temp status: ', tempStatus);
+            if (tempStatus) {
+              bot.postMessageToUser(tempUsername, 'My little birds tell me you did make a commit', params, function(data){ console.log('@commit_stalker said: ' + data.message.text); });
+            }
+            if (tempStatus == false){
+              bot.postMessageToUser(tempUsername, 'I do not find a commit in my records... but I\'ll keep watching :scream:', params, function(data){ console.log('@commit_stalker said: ' + data.message.text); });
+            }
+            if (tempStatus == null){
+              bot.postMessageToUser(tempUsername, 'There was an error getting your record. If this error continues, please message @theresa.', params, function(data){ console.log('@commit_stalker said: ' + data.message.text); });
+            }
+          });
         }
 
         if (tempMessage.includes('suck') || tempMessage.includes('worst') || tempMessage.includes('trash') || tempMessage.includes('stupid')) {
           bot.postMessageToUser(tempUsername, 'Just remember: I\'m the one that\'s stalking you :japanese_ogre:', params, function(data){ console.log('@commit_stalker said: ' + data.message.text); });
+        }
+        if (tempMessage.includes('denny')) {
+          bot.postMessageToUser(tempUsername, ':nail_care::nail_care::nail_care:', params, function(data){ console.log('@commit_stalker said: ' + data.message.text); });
         }
       }
     }

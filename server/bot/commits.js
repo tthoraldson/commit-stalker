@@ -1,11 +1,10 @@
 var request = require('request');
-var Promise = require('promise');
+var Promise = require('node-promise');
 var status;
-var github = 'tthoraldson'
-
+var github = 'tthoraldson';
 
 exports.get = function(callback){
-
+  var deferred = Promise.defer();
   var options = {
     url: 'https://api.github.com/users/' + github + '/events',
     headers: {
@@ -27,7 +26,7 @@ exports.get = function(callback){
           if (info[i].type == 'PushEvent'){
             if (info[i].payload.ref == 'refs/heads/master'){
               status = true;
-              console.log(status);
+              //console.log(status);
               break;
             }
             else {
@@ -42,9 +41,11 @@ exports.get = function(callback){
     } else {
       status = null;
     }
+    deferred.resolve(status);
   }
   request(options, callback)
-    .on('response', function(data){
-      console.log('async status: ' + status);
-  });
+//    .on('response', function(data){
+//      console.log('async status: ' + status);
+//  });
+  return deferred.promise;
 }
