@@ -1,7 +1,7 @@
 var request = require('request');
 var Promise = require('node-promise');
 var status;
-var github = 'tthoraldson';
+var github = 'jkfsdjksdfjkldsfjkldfsjklfdlk';
 
 exports.get = function(callback){
   var deferred = Promise.defer();
@@ -15,6 +15,7 @@ exports.get = function(callback){
   function callback(error, response, body) {
     if (!error && response.statusCode == 200) {
       info = JSON.parse(body);
+      console.log(info);
       for (var i = 0; i < info.length; i++){
         var d = new Date(Date.parse(info[i].created_at));
         var commitDate = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
@@ -26,26 +27,23 @@ exports.get = function(callback){
           if (info[i].type == 'PushEvent'){
             if (info[i].payload.ref == 'refs/heads/master'){
               status = true;
-              //console.log(status);
+              console.log(status);
               break;
             }
-            else {
-              status = false;
-            }
           }
-          else {
-            status = false;
-          }
+        } else {
+          status = false;
         }
       }
-    } else {
-      status = null;
+      if (status == undefined){
+        status = null;
+      }
     }
     deferred.resolve(status);
   }
   request(options, callback)
-//    .on('response', function(data){
-//      console.log('async status: ' + status);
-//  });
+   .on('response', function(data){
+     console.log('async status: ' + status);
+ });
   return deferred.promise;
 }
