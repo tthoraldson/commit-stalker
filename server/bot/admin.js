@@ -1,11 +1,36 @@
 var request = require('request');
 var Promise = require('node-promise');
-var status;
-var github; //= 'tthoraldson';
 
-exports.get = function(uGithub, callback){
+var linus = ['tthoraldson', 'Spengs', 'kerij', 'adameastvold', 'lizhaak', 'dennycheng', 'lpuhl', 'coreypeck', 'kmaimn', 'twinklefingers', 'dkuntz811', 'jtorborg', 'IamUnInc', '2trill2spill', 'andrewwiskus'];
+var yesCommitted = [];
+var noCommitted = [];
+
+exports.checkTeamCommits = function(){
+  yesCommitted = [];
+  noCommitted = [];
+
+  linus.forEach(function(user){
+    // console.log(user);
+    getCommit(user).then(function(status){
+      console.log(user + ' - ' + status);
+      if (status == true){
+        yesCommitted.push(user);
+      }
+      if (status == false){
+        noCommitted.push(user);
+      }
+    });
+  });
+
+
+//  console.log(sorted);
+}
+
+var status;
+var github;
+
+var getCommit = function(uGithub, callback){
   github = uGithub;
-  console.log(github);
   var deferred = Promise.defer();
   var options = {
     url: 'https://api.github.com/users/' + github + '/events',
@@ -44,8 +69,5 @@ exports.get = function(uGithub, callback){
     deferred.resolve(status);
   }
   request(options, callback)
- //   .on('response', function(data){
- //     console.log('async status: ' + status);
- // });
   return deferred.promise;
 }

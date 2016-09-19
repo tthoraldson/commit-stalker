@@ -13,10 +13,11 @@ var index = require('./routes/index');
 
 /** ------ MODULES ---------- **/
 var commits = require('./bot/commits');
+var admin = require('./bot/admin');
 
 /** ---------- MIDDLEWARE ---------- **/
 app.use(express.static(path.join(__dirname, './public')));
-app.use(bodyParser.json()); // needed for angular requests
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 /** ---------- EXPRESS ROUTES ---------- **/
@@ -84,6 +85,22 @@ bot.on('start', function() {
         // find user from usernames array
         var tempUsername = findUsernameById(data.user);
 
+        // ADMIN FUNCTIONALITY
+        if (data.user == 'U28NDAKRR') { // current admin id
+          console.log('ADMIN MESSAGE');
+
+          if (tempMessage.includes('admin')){
+              bot.postMessageToUser(tempUsername, 'Hello ADMIN', params, function(data){ console.log('@commit_stalker said: ' + data.message.text); });
+          }
+
+          if (tempMessage.includes('linus commits')){
+            admin.checkTeamCommits();
+          }
+
+        }
+
+
+
         // if text says hello, hi, or hola
         if (tempMessage.includes('hello') || tempMessage.includes('hola')){
           if (data.type == 'message' && data.username != 'commit_stalker'){
@@ -93,9 +110,9 @@ bot.on('start', function() {
             bot.postMessageToUser(tempUsername, 'Hello there ;)', params, function(data){ console.log('@commit_stalker said: ' + data.message.text); });
           }
         }
-
-        if (tempMessage.includes('check commits') || tempMessage.includes('have I commited?')){
-          commits.get().then(function (status) {
+        //
+        if (tempMessage.includes('check commits') || tempMessage.includes('have i committed') || tempMessage.includes('did i make a commit today')){
+          commits.get('tthoraldson').then(function (status) {
             tempStatus = status;
             console.log('temp status: ', tempStatus);
             if (tempStatus) {
@@ -109,12 +126,20 @@ bot.on('start', function() {
             }
           });
         }
-
+        // SASS RESPONSE
         if (tempMessage.includes('suck') || tempMessage.includes('worst') || tempMessage.includes('trash') || tempMessage.includes('stupid')) {
           bot.postMessageToUser(tempUsername, 'Just remember: I\'m the one that\'s stalking you :japanese_ogre:', params, function(data){ console.log('@commit_stalker said: ' + data.message.text); });
         }
         if (tempMessage.includes('denny')) {
           bot.postMessageToUser(tempUsername, ':nail_care::nail_care::nail_care:', params, function(data){ console.log('@commit_stalker said: ' + data.message.text); });
+        }
+        if (tempMessage.includes('joke')) {
+          if (data.type == 'message' && data.username != 'commit_stalker'){
+            bot.postMessageToUser(tempUsername, 'Do you think I have time to joke around when I\'m following you in every aspect of your internet life? :japanese_ogre:', params, function(data){ console.log('@commit_stalker said: ' + data.message.text); });
+          }
+        }
+        if (tempMessage.includes('who are you')) {
+          bot.postMessageToUser(tempUsername, 'It doesn\'t matter who I am, but rather what I do...\n if you\'re really lost, here\'s a link: https://en.wikipedia.org/wiki/Stalking', params, function(data){ console.log('@commit_stalker said: ' + data.message.text); });
         }
       }
     }
@@ -155,7 +180,7 @@ function findUsernameById(id){
     }
     return tempUsername
   });
-  console.log('Current Conversation With: ' + tempUsername);
+  console.log('Current Conversation With: ' + tempUsername + ' ID: ' + id);
   return tempUsername
 }
 
@@ -185,7 +210,6 @@ function findChannelById(id){
   channels.forEach(function(channel){
     if (channel.channelId === id){
       tempChannel = channel.channelName;
-      console.log(tempChannel);
     }
   });
   return tempChannel;
