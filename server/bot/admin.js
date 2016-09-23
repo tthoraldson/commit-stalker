@@ -10,20 +10,18 @@ exports.checkTeamCommits = function(){
   noCommitted = [];
 
   linus.forEach(function(user){
-    // console.log(user);
     getCommit(user).then(function(status){
-      console.log(user + ' - ' + status);
+      //console.log(user + ' - ' + status);
       if (status == true){
         yesCommitted.push(user);
+        console.log(status);
       }
       if (status == false){
         noCommitted.push(user);
+        console.log(status);
       }
     });
   });
-
-
-//  console.log(sorted);
 }
 
 var status;
@@ -31,18 +29,20 @@ var github;
 
 var getCommit = function(uGithub, callback){
   github = uGithub;
+  console.log(github);
   var deferred = Promise.defer();
   var options = {
     url: 'https://api.github.com/users/' + github + '/events',
     headers: {
-      'User-Agent': 'request'
+      'User-Agent': 'tthoraldson',
+      'token': process.env.GITHUB_AUTH
     }
   };
 
   function callback(error, response, body) {
     if (!error && response.statusCode == 200) {
       info = JSON.parse(body);
-      // console.log(info);
+      console.log(info);
       for (var i = 0; i < info.length; i++){
         var d = new Date(Date.parse(info[i].created_at));
         var commitDate = 'D' + d.getFullYear() + '_' + (d.getMonth() + 1) + '_' + d.getDate();
@@ -54,7 +54,7 @@ var getCommit = function(uGithub, callback){
           if (info[i].type == 'PushEvent'){
             if (info[i].payload.ref == 'refs/heads/master'){
               status = true;
-              // console.log(status);
+              console.log(status);
               break;
             }
           }

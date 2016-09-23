@@ -94,9 +94,11 @@ bot.on('start', function() {
           }
 
           if (tempMessage.includes('linus commits')){
-            admin.checkTeamCommits();
-          }
+            // admin.checkTeamCommits();
+            console.log('linus commits');
 
+            var yay = bot.postMessageToChannel('linus', '2/15 commits for the day. \n Come on... I need something to creep on :japanese_goblin:', params, function(data){ console.log('@commit_stalker said: ' + data.message.text); });
+          }
         }
 
 
@@ -112,20 +114,34 @@ bot.on('start', function() {
         }
         //
         if (tempMessage.includes('check commits') || tempMessage.includes('have i committed') || tempMessage.includes('did i make a commit today')){
-          commits.get('tthoraldson').then(function (status) {
-            tempStatus = status;
-            console.log('temp status: ', tempStatus);
-            if (tempStatus) {
-              bot.postMessageToUser(tempUsername, 'My little birds tell me you did make a commit', params, function(data){ console.log('@commit_stalker said: ' + data.message.text); });
-            }
-            if (tempStatus === false){
-              bot.postMessageToUser(tempUsername, 'I do not find a commit in my records... but I\'ll keep watching :scream:', params, function(data){ console.log('@commit_stalker said: ' + data.message.text); });
-            }
-            if (tempStatus === undefined){
-              bot.postMessageToUser(tempUsername, 'There was an error getting your record. If this error continues, please message @theresa.', params, function(data){ console.log('@commit_stalker said: ' + data.message.text); });
-            }
-          });
+          if (data.type == 'message' && data.username != 'commit_stalker'){
+            commits.get('tthoraldson').then(function (status) {
+              tempStatus = status;
+              console.log('temp status: ', tempStatus);
+              if (tempStatus) {
+                bot.postMessageToUser(tempUsername, 'My little birds tell me you did make a commit', params, function(data){ console.log('@commit_stalker said: ' + data.message.text); });
+              }
+              if (tempStatus === false){
+                bot.postMessageToUser(tempUsername, 'I do not find a commit in my records... but I\'ll keep watching :scream:', params, function(data){ console.log('@commit_stalker said: ' + data.message.text); });
+              }
+              if (tempStatus === undefined){
+                bot.postMessageToUser(tempUsername, 'There was an error getting your record. If this error continues, please message @theresa.', params, function(data){ console.log('@commit_stalker said: ' + data.message.text); });
+              }
+            });
+          }
         }
+        if (tempMessage.includes('help')) {
+          if (data.type == 'message' && data.username != 'commit_stalker'){
+            bot.postMessageToUser(tempUsername, 'Here\'s a few helpful phrases to get started having conversations with me: \n' +
+            '>>> <@U2B4DPJ68> hello\n' +
+            '<@U2B4DPJ68> check commits\n' +
+            '<@U2B4DPJ68> tell me a joke\n' +
+            '<@U2B4DPJ68> who are you\n' +
+            '<@U2B4DPJ68> you\'re stupid\n', params, function(data){ console.log('@commit_stalker said: ' + data.message.text); });
+          }
+        }
+
+
         // SASS RESPONSE
         if (tempMessage.includes('suck') || tempMessage.includes('worst') || tempMessage.includes('trash') || tempMessage.includes('stupid')) {
           bot.postMessageToUser(tempUsername, 'Just remember: I\'m the one that\'s stalking you :japanese_ogre:', params, function(data){ console.log('@commit_stalker said: ' + data.message.text); });
