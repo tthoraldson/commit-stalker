@@ -4,6 +4,7 @@
 Commit Tracker is a full-stack web application that checks if members of a team have made a github commit everyday. It also has a slack-bot to message specific users who haven't committed yet that day. Built in line with the 30 day github challenge sprint.
 
 To-Do list:
-FSFDS
+Make a better README.md
+Fix 'linus commits'
 
 Future Scope:
