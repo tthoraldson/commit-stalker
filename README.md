@@ -6,6 +6,7 @@ Commit Tracker is a full-stack web application that checks if members of a team 
 To-Do list:
 - ability to change github username
 - a usable front end
+- timer function
 
 
 ![Example](Screen Shot 2016-09-29 at 1.29.18 PM.png)
