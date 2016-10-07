@@ -7,6 +7,7 @@ To-Do list:
 - ability to change github username
 - a usable front end
 - timer function
+- team functionality
 
 
 ![Example](Screen Shot 2016-09-29 at 1.29.18 PM.png)
