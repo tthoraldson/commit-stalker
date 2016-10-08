@@ -8,6 +8,6 @@ To-Do list:
 - a usable front end
 - timer function
 - team functionality
-
+- create a working travis.yml
 
 ![Example](Screen Shot 2016-09-29 at 1.29.18 PM.png)
