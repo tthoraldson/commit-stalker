@@ -11,5 +11,6 @@ To-Do list:
 - team functionality
 - create a working travis.yml
 - build and edit teams
+- official domain perhaps
 
 ![Example](Screen Shot 2016-09-29 at 1.29.18 PM.png)
