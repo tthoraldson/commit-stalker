@@ -12,5 +12,6 @@ To-Do list:
 - create a working travis.yml
 - build and edit teams
 - official domain perhaps
+- add grunt, file compression
 
 ![Example](Screen Shot 2016-09-29 at 1.29.18 PM.png)
